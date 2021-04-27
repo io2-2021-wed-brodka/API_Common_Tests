@@ -33,7 +33,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Login\":\"listBikesUser\",\r\n    \"Password\":\"listBikesPass\"\r\n}",
+					"raw": "{\r\n    \"login\":\"listBikesUser\",\r\n    \"password\":\"listBikesPass\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
