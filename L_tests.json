@@ -50,6 +50,39 @@
 			"response": []
 		},
 		{
+			"name": "Get all stations OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Bike count more than 1\",function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"FirstStationID\", jsonData.stations[0].id);\r",
+							"    pm.expect(jsonData.stations.length).to.above(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}stations",
+					"host": [
+						"{{URL}}stations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get bikes on station OK",
 			"event": [
 				{
@@ -67,7 +100,8 @@
 							"\r",
 							"pm.test(\"Correct station ID on result\",function(){\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.bikes[0].station.id).to.equal(\"1\");\r",
+							"    var expected = pm.collectionVariables.get(\"FirstStationID\");\r",
+							"    pm.expect(jsonData.bikes[0].station.id).to.equal(expected);\r",
 							"});\r",
 							""
 						],
@@ -79,12 +113,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URL}}stations/1/bikes",
+					"raw": "{{URL}}stations/{{FirstStationID}}/bikes",
 					"host": [
 						"{{URL}}stations"
 					],
 					"path": [
-						"1",
+						"{{FirstStationID}}",
 						"bikes"
 					]
 				}
@@ -130,6 +164,10 @@
 		{
 			"key": "Token",
 			"value": "x"
+		},
+		{
+			"key": "FirstStationID",
+			"value": "-1"
 		}
 	]
 }
