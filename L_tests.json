@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "a6dd55d9-7ae1-4caf-b407-43cdcaf96eeb",
+		"name": "Listing bikes on a station",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct role\",function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"Token\", jsonData.token);\r",
+							"    pm.expect(jsonData.role).to.eql(\"user\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Login\":\"listBikesUser\",\r\n    \"Password\":\"listBikesPass\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}register",
+					"host": [
+						"{{URL}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get bikes on station OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Bike count more than 1\",function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.bikes.length).to.above(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct station ID on result\",function(){\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.bikes[0].station.id).to.equal(\"1\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}stations/1/bikes",
+					"host": [
+						"{{URL}}stations"
+					],
+					"path": [
+						"1",
+						"bikes"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "https://localhost:5001/api/"
+		},
+		{
+			"key": "Token",
+			"value": "x"
+		}
+	]
+}
