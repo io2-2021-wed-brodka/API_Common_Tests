@@ -16,10 +16,10 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Correct role\",function(){\r",
+							"pm.test(\"Token contains data\",function(){\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.collectionVariables.set(\"Token\", jsonData.token);\r",
-							"    pm.expect(jsonData.role).to.eql(\"user\");\r",
+							"    pm.expect(jsonData.token).to.not.eql(\"\");\r",
 							"});\r",
 							"\r",
 							""
@@ -33,7 +33,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Login\":\"listBikesUser\",\r\n    \"Password\":\"listBikesPass\"\r\n}",
+					"raw": "{\r\n    \"login\":\"listBikesUser\",\r\n    \"password\":\"listBikesPass\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
