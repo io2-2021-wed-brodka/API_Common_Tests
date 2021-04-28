@@ -344,12 +344,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/stations",
+							"raw": "{{baseUrl}}/stations/active",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"stations"
+								"stations",
+								"active"
 							]
 						},
 						"description": "Gets all stations"
